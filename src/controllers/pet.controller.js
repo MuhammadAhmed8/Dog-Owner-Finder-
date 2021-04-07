@@ -1,9 +1,19 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
+const { petService } = require('../services')
 
 const createPet = catchAsync(async(req, res) => {
-    res.status(httpStatus.CREATED).send({ pet: "created" })
+
+    const pet = await petService.createPet(req.body);
+    res.status(httpStatus.CREATED).send(pet)
 })
 
+const getPets = catchAsync(async(req, res) => {
+    const pets = await petService.getPets();
+    res.send(pets);
+});
 
-exports.createPet = createPet;
+module.exports = {
+    createPet,
+    getPets
+}

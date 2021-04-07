@@ -18,7 +18,42 @@ components:
         email: fake@example.com
         name: fake name
         role: user
-
+    Pet:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          required: true
+        breed:
+          type: string
+          required: true
+        image:
+            type: string
+        color:
+            type: string
+            required: true
+        age:
+            type: integer
+        gender:
+            type: string
+            enum: [male, female]
+            required: true
+        about:
+            type: string
+            maxLength: 50
+        size:
+            type: string
+            enum: [small, medium, large, giant]
+            required: true
+        weight:
+            type: float
+            required: true
+        status:
+            type: string
+            enum: [available, not available]
+            default: available
     Token:
       type: object
       properties:
