@@ -43,6 +43,16 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+
+    favourites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Pet"
+    }],
+
+    location: {
+        type: String
+    }
+
 }, {
     timestamps: true,
 });

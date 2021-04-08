@@ -1,5 +1,6 @@
 const httpStatus = require("http-status");
 const Pet = require("../models/pet.model")
+const User = require("../models/user.model")
 
 const createPet = async(petBody) => {
     const pet = await Pet.create(petBody);
@@ -23,8 +24,8 @@ const deletePet = async(petId) => {
     await Pet.deleteOne({ _id: petId })
 }
 
-const getPets = async() => {
-    return await Pet.find({});
+const getPets = async(pageOptions) => {
+    return await Pet.find({}).skip(pageOptions.page).limit(pageOptions.limit);
 }
 
 
@@ -36,8 +37,8 @@ const getPetByName = async(petName) => {
     return await Pet.findOne({ name: petName })
 }
 
-const getPetsByBreed = async(petBreed) => {
-    return await Pet.find({ breed: petBreed });
+const getPetsByBreed = async(petBreed, pageOptions) => {
+    return await Pet.find({ breed: petBreed }).skip(pageOptions.skip).limit(pageOptions.limit);
 }
 
 

@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.post('/', petController.createPet);
 router.get('/', petController.getPets);
+router.get('/:id', petController.getPetById)
 
 
 module.exports = router;
