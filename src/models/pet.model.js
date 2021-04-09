@@ -50,6 +50,11 @@ const petSchema = mongoose.Schema({
         type: String,
         enum: ['available', 'not available'],
         default: 'available'
+    },
+
+    location: {
+        type: String,
+        required: true
     }
 
 
