@@ -7,5 +7,6 @@ const adoptionController = require('../../controllers/adoption.controller');
 const router = express.Router();
 
 router.post('/', auth(), adoptionController.createAdoptionRequest);
-
+router.get('/request', auth('managePets'), adoptionController.getAllAdoptionRequests);
+router.post('/request/status', auth('managePets'), adoptionController.changeRequestStatus)
 module.exports = router;

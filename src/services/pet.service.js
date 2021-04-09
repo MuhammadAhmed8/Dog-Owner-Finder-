@@ -43,9 +43,7 @@ exports.getPetsByBreed = async(petBreed, pageOptions) => {
 
 exports.checkIsPetAvailable = async(petId) => {
     const pet = await Pet.findOne({ _id: petId });
-    console.log("hii", petId);
-    console.log(pet);
-    if (pet.status.toLowerCase() === "available") {
+    if (pet && pet.status.toLowerCase() === "available") {
         return true;
     }
 

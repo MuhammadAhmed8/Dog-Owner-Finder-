@@ -15,6 +15,11 @@ const adoptionSchema = mongoose.Schema({
         type: String,
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending'
+    },
+
+    location: {
+        type: String,
+        required: true
     }
 
 }, {

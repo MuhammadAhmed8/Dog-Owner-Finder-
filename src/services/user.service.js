@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
-const createUser = async(userBody) => {
+exports.createUser = async(userBody) => {
     if (await User.isEmailTaken(userBody.email)) {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
     }
@@ -29,7 +29,7 @@ const createUser = async(userBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryUsers = async(filter, options) => {
+exports.queryUsers = async(filter, options) => {
     const users = await User.paginate(filter, options);
     return users;
 };
@@ -39,7 +39,7 @@ const queryUsers = async(filter, options) => {
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
-const getUserById = async(id) => {
+exports.getUserById = async(id) => {
     return User.findById(id);
 };
 
@@ -48,7 +48,7 @@ const getUserById = async(id) => {
  * @param {string} email
  * @returns {Promise<User>}
  */
-const getUserByEmail = async(email) => {
+exports.getUserByEmail = async(email) => {
     return User.findOne({ email });
 };
 
@@ -58,7 +58,7 @@ const getUserByEmail = async(email) => {
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-const updateUserById = async(userId, updateBody) => {
+exports.updateUserById = async(userId, updateBody) => {
     const user = await getUserById(userId);
     if (!user) {
         throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -76,7 +76,7 @@ const updateUserById = async(userId, updateBody) => {
  * @param {ObjectId} userId
  * @returns {Promise<User>}
  */
-const deleteUserById = async(userId) => {
+exports.deleteUserById = async(userId) => {
     const user = await getUserById(userId);
     if (!user) {
         throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -85,7 +85,7 @@ const deleteUserById = async(userId) => {
     return user;
 };
 
-const addPetsToUserFavourites = async(petId, userId) => {
+exports.addPetsToUserFavourites = async(petId, userId) => {
 
     let pet = Pet.findById(petId);
 
@@ -103,12 +103,7 @@ const addPetsToUserFavourites = async(petId, userId) => {
 }
 
 
-module.exports = {
-    createUser,
-    queryUsers,
-    getUserById,
-    getUserByEmail,
-    updateUserById,
-    deleteUserById,
-    addPetsToUserFavourites
-};
+exports.petsManageRights = async(userId, location) => {
+    const user = await this.getUserById(userId);
+    return user.location.toLowerCase() === location.toLowerCase();
+}
