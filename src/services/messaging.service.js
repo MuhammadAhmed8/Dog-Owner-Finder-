@@ -57,3 +57,10 @@ exports.getMessages = async(convId) => {
 
 
 }
+
+exports.getAllConversations = async(userId) => {
+
+    const conversations = await Conversation.find({ participants: userId });
+
+    return conversations;
+}

@@ -40,8 +40,12 @@ exports.getPetByName = async(petName) => {
 }
 
 exports.getPetsByBreed = async(petBreed, pageOptions) => {
-    const petCounts = await Pet.count({ breed: petBreed });
-    const pets = await Pet.find({ breed: petBreed }).skip(pageOptions.skip).limit(pageOptions.limit);
+    const pattern = { '$regex': petBreed, $options: 'i' };
+
+    const petCounts = await Pet.count({ breed: pattern });
+
+    const pets = await Pet.find({ breed: pattern }).skip(pageOptions.skip).limit(pageOptions.limit);
+
     return { petCounts, pets };
 }
 

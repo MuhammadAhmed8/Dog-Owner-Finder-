@@ -26,3 +26,14 @@ exports.getMessages = catchError(async(req, res) => {
     return res.send({ messages });
 
 })
+
+
+exports.getConversations = catchError(async(req, res) => {
+
+    const userId = req.user._id;
+
+    const messages = await messagingService.getAllConversations(userId);
+
+    return res.send({ messages });
+
+})
