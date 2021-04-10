@@ -1,6 +1,8 @@
 const httpStatus = require('http-status');
 const catchError = require('../utils/catchAsync');
-const { petService } = require('../services')
+const { petService } = require('../services');
+const pick = require('../utils/pick');
+
 
 const createPet = catchError(async(req, res) => {
 
@@ -9,20 +11,31 @@ const createPet = catchError(async(req, res) => {
 })
 
 const getPets = catchError(async(req, res) => {
-    let pets;
-    console.log(req.query)
-    let pageOptions = {
-        'limit': 2,
-        'skip': (+req.query.page - 1) * 2,
-    }
-    console.log(pageOptions)
-    if (req.query.breed) {
-        pets = await petService.getPetsByBreed(req.query.breed.toLowerCase(), pageOptions)
-    } else {
-        pets = await petService.getPets(pageOptions);
+
+    let defaultLimit = 4;
+    let limit = !req.query.limit ? defaultLimit : +req.query.limit;
+    let page = !req.query.page || req.query.page < 1 ? 1 : +req.query.page;
+    let sortBy = req.query.sortBy;
+    let orderBy = req.query.orderBy;
+
+    let options = {
+        'limit': limit,
+        'skip': (page - 1) * limit,
     }
 
-    res.send(pets);
+    let filter = pick(req.query, ['breed', 'color', 'age', 'size']);
+
+    console.log(options)
+
+    const pets = await petService.getPets(filter, options);
+
+    // if (req.query.breed) {
+    //     pets = await petService.getPetsByBreed(req.query.breed.toLowerCase(), pageOptions)
+    // } else {
+
+    // }
+
+    res.send(pets); // STATUS CODE Default 200
 });
 
 const getPetById = catchError(async(req, res) => {

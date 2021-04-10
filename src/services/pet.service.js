@@ -25,9 +25,10 @@ exports.deletePet = async(petId) => {
     await Pet.deleteOne({ _id: petId })
 }
 
-exports.getPets = async(pageOptions) => {
-    const petCounts = await Pet.count();
-    const pets = await Pet.find({}).skip(pageOptions.skip).limit(pageOptions.limit);
+exports.getPets = async(filter, options) => {
+    const petCounts = await Pet.count(filter);
+    const pets = await Pet.find(filter).sort({ '_id': -1 }).skip(options.skip).limit(options.limit)
+
     return { petCounts, pets };
 }
 
