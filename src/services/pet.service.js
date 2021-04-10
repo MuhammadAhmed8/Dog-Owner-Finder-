@@ -41,15 +41,6 @@ exports.getPetByName = async(petName) => {
     return await Pet.findOne({ name: petName })
 }
 
-exports.getPetsByBreed = async(petBreed, pageOptions) => {
-    const pattern = { '$regex': petBreed, $options: 'i' };
-
-    const petCounts = await Pet.count({ breed: pattern });
-
-    const pets = await Pet.find({ breed: pattern }).skip(pageOptions.skip).limit(pageOptions.limit);
-
-    return { petCounts, pets };
-}
 
 exports.checkIsPetAvailable = async(petId) => {
     const pet = await Pet.findOne({ _id: petId });

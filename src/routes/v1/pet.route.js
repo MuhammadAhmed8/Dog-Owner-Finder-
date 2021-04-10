@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/', auth("managePets"), petController.createPet);
 router.get('/', petController.getPets);
 router.get('/:id', petController.getPetById)
-router.put('/:id', auth("managePets"), petController.updatePet)
+router.patch('/:id', auth("managePets"), petController.updatePet)
 router.delete('/:id', auth("managePets"), petController.deletePet)
 
 module.exports = router;
