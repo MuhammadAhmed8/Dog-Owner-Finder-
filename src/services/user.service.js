@@ -102,6 +102,12 @@ exports.addPetsToUserFavourites = async(petId, userId) => {
     return user.favourites
 }
 
+exports.getFavourites = async(userId) => {
+
+    return await User.findOne({ _id: userId }).populate("favourites").select("favourites");
+
+}
+
 
 exports.petsManageRights = async(userId, location) => {
     const user = await this.getUserById(userId);

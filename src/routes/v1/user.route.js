@@ -6,18 +6,20 @@ const userController = require('../../controllers/user.controller');
 
 const router = express.Router();
 
-router
-    .route('/')
+
+router.route('/')
     .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
     .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
-router
-    .route('/:userId')
+router.post("/favourites", auth(), userController.addToFavourites);
+router.get("/favourites", auth(), userController.getFavourites);
+
+
+router.route('/:userId')
     .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
     .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
     .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
-router.post("/favourites", auth(), userController.addToFavourites);
 
 
 module.exports = router;

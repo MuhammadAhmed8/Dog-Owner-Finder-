@@ -35,11 +35,18 @@ const deleteUser = catchError(async(req, res) => {
 });
 
 const addToFavourites = catchError(async(req, res) => {
-    console.log("hello", req.user);
     const favs = await userService.addPetsToUserFavourites(req.body.petId, req.user._id);
     res.status(httpStatus.NO_CONTENT).send({
         favourites: favs
     })
+})
+
+const getFavourites = catchError(async(req, res) => {
+
+    const userId = req.user._id;
+    const favs = await userService.getFavourites(userId);
+    res.send(favs);
+
 })
 
 module.exports = {
@@ -48,5 +55,6 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
-    addToFavourites
+    addToFavourites,
+    getFavourites
 };
