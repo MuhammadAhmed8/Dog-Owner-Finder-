@@ -3,8 +3,10 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const petRoute = require('./pet.route');
+const messagingRoute = require('./messaging.route');
 const adoptionRoute = require('./adoption.route');
 const config = require('../../config/config');
+const { messagingController } = require('../../controllers');
 
 const router = express.Router();
 
@@ -23,6 +25,11 @@ const defaultRoutes = [{
     {
         path: '/adopt',
         route: adoptionRoute
+    },
+
+    {
+        path: '/message',
+        route: messagingRoute
     }
 ];
 

@@ -107,3 +107,12 @@ exports.petsManageRights = async(userId, location) => {
     const user = await this.getUserById(userId);
     return user.location.toLowerCase() === location.toLowerCase();
 }
+
+
+exports.getStaffMemberIdByLocation = async(location) => {
+
+    const user = await User.findOne({ location: location });
+
+    return user._id;
+
+}

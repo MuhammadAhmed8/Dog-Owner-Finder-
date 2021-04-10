@@ -22,7 +22,7 @@ exports.requestAdoption = async(userId, petId) => {
 exports.getAllAdoptionRequests = async(userId) => {
 
     const user = await userService.getUserById(userId);
-    return await Adoption.find({ location: user.location }).sort({ createdAt: -1 });
+    return await Adoption.find({ location: user.location }).populate("user pet").sort({ createdAt: -1 });
 
 }
 

@@ -21,6 +21,11 @@ const messageSchema = mongoose.Schema({
         ref: 'User'
     },
 
+    convId: {
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'Conversation'
+    },
+
     content: {
         type: String,
         maxLength: 200,
@@ -48,5 +53,5 @@ const messageSchema = mongoose.Schema({
 
 
 
-module.exports.Conversation = mongoose.model("Conversation", conversationSchema);
-module.exports.Message = mongoose.model("Message", messageSchema);
+exports.Conversation = mongoose.model("Conversation", conversationSchema);
+exports.Message = mongoose.model("Message", messageSchema);

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const adoptionSchema = mongoose.Schema({
-    petId: {
+    pet: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'Pet'
     },
 
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User'
     },
@@ -25,5 +25,6 @@ const adoptionSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
+
 
 module.exports = mongoose.model('Adoption', adoptionSchema);

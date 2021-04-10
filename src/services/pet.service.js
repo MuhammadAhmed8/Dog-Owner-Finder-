@@ -25,7 +25,9 @@ exports.deletePet = async(petId) => {
 }
 
 exports.getPets = async(pageOptions) => {
-    return await Pet.find({}).skip(pageOptions.page).limit(pageOptions.limit);
+    const petCounts = await Pet.count();
+    const pets = await Pet.find({}).skip(pageOptions.page).limit(pageOptions.limit);
+    return { petCounts, pets };
 }
 
 
@@ -38,7 +40,9 @@ exports.getPetByName = async(petName) => {
 }
 
 exports.getPetsByBreed = async(petBreed, pageOptions) => {
-    return await Pet.find({ breed: petBreed }).skip(pageOptions.skip).limit(pageOptions.limit);
+    const petCounts = await Pet.count({ breed: petBreed });
+    const pets = await Pet.find({ breed: petBreed }).skip(pageOptions.skip).limit(pageOptions.limit);
+    return { petCounts, pets };
 }
 
 exports.checkIsPetAvailable = async(petId) => {
