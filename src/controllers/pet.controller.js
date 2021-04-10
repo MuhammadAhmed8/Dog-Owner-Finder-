@@ -12,8 +12,8 @@ const getPets = catchAsync(async(req, res) => {
     let pets;
     console.log(req.query)
     let pageOptions = {
-        'limit': 10,
-        'skip': +(req.query.page - 1) * 10,
+        'limit': 2,
+        'skip': (+req.query.page - 1) * 2,
     }
     console.log(pageOptions)
     if (req.query.breed) {
