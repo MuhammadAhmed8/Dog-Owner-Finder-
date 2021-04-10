@@ -10,12 +10,13 @@ exports.createPet = async(petBody) => {
     return pet;
 }
 
-exports.updatePet = async(petBody) => {
-    await Pet.updateOne({ _id: petBody.id }, {
-        $set: {
-            ...petBody
-        }
-    })
+exports.updatePet = async(petId, petBody) => {
+
+    if ('_id' in petBody) {
+        delete petBody["_id"];
+    }
+
+    return await Pet.findOneAndUpdate({ _id: petId }, petBody, { new: true })
 
 }
 

@@ -1,14 +1,14 @@
 const httpStatus = require('http-status');
-const catchAsync = require('../utils/catchAsync');
+const catchError = require('../utils/catchAsync');
 const { petService } = require('../services')
 
-const createPet = catchAsync(async(req, res) => {
+const createPet = catchError(async(req, res) => {
 
     const pet = await petService.createPet(req.body);
     res.status(httpStatus.CREATED).send(pet)
 })
 
-const getPets = catchAsync(async(req, res) => {
+const getPets = catchError(async(req, res) => {
     let pets;
     console.log(req.query)
     let pageOptions = {
@@ -25,14 +25,29 @@ const getPets = catchAsync(async(req, res) => {
     res.send(pets);
 });
 
-const getPetById = catchAsync(async(req, res) => {
+const getPetById = catchError(async(req, res) => {
     console.log(req.params.id);
     const pet = await petService.getPetById(req.params.id);
     res.send(pet);
 })
 
+const updatePet = catchError(async(req, res) => {
+
+    const { id } = req.params;
+    const petDetails = req.body // req.body will contain all the updated fields for the pet
+    const pet = await petService.updatePet(id, petDetails);;
+    res.send(pet);
+});
+
+const deletePet = catchError(async(req, res) => {
+    await petService.deletePet(req.params.userId);
+    res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
     createPet,
     getPets,
-    getPetById
+    getPetById,
+    updatePet,
+    deletePet
 }
