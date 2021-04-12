@@ -3,7 +3,7 @@ const Pet = require("../models/pet.model")
 const User = require("../models/user.model")
 const Adoption = require("../models/adoption.model")
 const { userService, petService } = require("./");
-
+const mongoose = require("mongoose");
 const ApiError = require('../utils/ApiError');
 
 
@@ -11,8 +11,12 @@ exports.requestAdoption = async(userId, petId) => {
 
     const pet = await petService.getPetById(petId);
 
+    if (pet.status === "not available") {
+        throw new ApiError(httpStatus.NOT_FOUND, "The pet is not available for adoption.")
+    }
+
     if (!pet) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Pet not available");
+        throw new ApiError(httpStatus.NOT_FOUND, "Pet not found");
     }
 
 
@@ -44,11 +48,16 @@ exports.changeRequestStatus = async(userId, requestId, newStatus) => {
 
     }
 
-    return await Adoption.findOneAndUpdate({ _id: requestId }, {
+    const ado = await Adoption.findOneAndUpdate({ _id: requestId }, {
         $set: {
             status: newStatus
         }
-    })
+    }, { new: true })
 
+    if (ado.status === "accepted") {
+        await petService.updatePet(ado.petId, { status: 'not available' });
+    }
+
+    return ado;
 
 }

@@ -4,13 +4,27 @@ const { petService } = require('../services');
 const pick = require('../utils/pick');
 
 
+
 const createPet = catchError(async(req, res) => {
 
+    /*
+      Post Pet Action. Calls the pet service to create new
+      pets. Needs authorization.
+    */
+
     const pet = await petService.createPet(req.body);
-    res.status(httpStatus.CREATED).send(pet)
+    res.status(httpStatus.CREATED).send({ pet });
+
 })
 
+
 const getPets = catchError(async(req, res) => {
+
+    /*
+      Get Pet Action. Returns the pets documents. Also Filters
+      the response based on the query params. Possible filters are
+      breed, age, color, size, limit, and page.
+    */
 
     let defaultLimit = 4;
     let limit = !req.query.limit ? defaultLimit : +req.query.limit;
@@ -29,20 +43,18 @@ const getPets = catchError(async(req, res) => {
 
     const pets = await petService.getPets(filter, options);
 
-    // if (req.query.breed) {
-    //     pets = await petService.getPetsByBreed(req.query.breed.toLowerCase(), pageOptions)
-    // } else {
 
-    // }
 
     res.send(pets); // STATUS CODE Default 200
 });
+
 
 const getPetById = catchError(async(req, res) => {
     console.log(req.params.id);
     const pet = await petService.getPetById(req.params.id);
     res.send(pet);
 })
+
 
 const updatePet = catchError(async(req, res) => {
 
@@ -52,10 +64,12 @@ const updatePet = catchError(async(req, res) => {
     res.send(pet);
 });
 
+
 const deletePet = catchError(async(req, res) => {
     await petService.deletePet(req.params.userId);
     res.status(httpStatus.NO_CONTENT).send();
 });
+
 
 module.exports = {
     createPet,
