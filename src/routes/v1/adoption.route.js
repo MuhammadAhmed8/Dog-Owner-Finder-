@@ -15,9 +15,6 @@ module.exports = router;
 
 /**
  * @swagger
- * tags:
- *   name: Adopt pet
- *   description: users can request to adopt pet
  * /adopt/request:
  *   post:
  *     summary: Create an adoption request
@@ -70,6 +67,11 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger
+ * /adopt/request/{id}:
  *   patch:
  *     summary: Update a request status
  *     description: Only staff members of that location are allowed.

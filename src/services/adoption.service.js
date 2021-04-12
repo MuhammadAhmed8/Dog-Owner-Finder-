@@ -20,7 +20,7 @@ exports.requestAdoption = async(userId, petId) => {
     }
 
 
-    return await Adoption.create({ userId: userId, petId: pet._id, location: pet.location });
+    return await Adoption.create({ user: userId, pet: pet._id, location: pet.location });
 }
 
 exports.getAllAdoptionRequests = async(userId) => {

@@ -93,7 +93,7 @@ module.exports = router;
  *       - in: query
  *         name: limit
  *         default: 10
- *         description: Maximum number of users
+ *         description: Maximum number of pets
  *       - in: query
  *         name: page
  *         schema:
