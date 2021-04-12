@@ -7,21 +7,21 @@ const { messagingService, userService, petService } = require('../services');
 exports.postMessage = catchError(async(req, res) => {
 
     const senderId = req.user._id;
-    const { convId } = req.params;
+    const { id } = req.params;
     const { message } = req.body;
 
-    await messagingService.createMessage(convId, senderId, message)
+    const msg = await messagingService.createMessage(id, senderId, message)
 
-    return res.send({ 'success': true });
+    return res.send({ message: msg });
 
 })
 
 
 exports.getMessages = catchError(async(req, res) => {
 
-    const { convId } = req.params;
+    const { id } = req.params;
 
-    const messages = await messagingService.getMessages(convId);
+    const messages = await messagingService.getMessages(id);
 
     return res.send({ messages });
 

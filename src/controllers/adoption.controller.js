@@ -22,7 +22,7 @@ exports.getAllAdoptionRequests = catchError(async(req, res) => {
 
 exports.changeRequestStatus = catchError(async(req, res) => {
     const userId = req.user._id;
-    const requestId = req.body.requestId;
+    const requestId = req.params.id;
     const newStatus = req.body.status;
 
     const adoptionRequest = await AdoptionService.changeRequestStatus(userId, requestId, newStatus);

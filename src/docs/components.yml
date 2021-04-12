@@ -54,6 +54,22 @@ components:
             type: string
             enum: [available, not available]
             default: available
+
+    Adoption:
+      type: object
+      properties:
+        pet:
+          type: string
+        user:
+          type: string
+        status:
+            type: string
+            enum: [pending, accepted, rejected]
+            default: pending
+        location:
+            type: string
+            required: true
+
     Token:
       type: object
       properties:

@@ -1,6 +1,6 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
-const { routeMessage } = require('../../middlewares/message');
+const { routeMessage, messageAuth } = require('../../middlewares/message');
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const { messagingController } = require('../../controllers');
@@ -9,14 +9,18 @@ const router = express.Router();
 
 
 
-router.post('/', auth(), routeMessage, messagingController.postMessage);
 
-router.get('/conversations', auth(), messagingController.getConversations);
+// get all conversations of a user
+router.get('/', auth(), messagingController.getConversations);
 
+// create a conversation and send a message
+router.post('/message', auth(), routeMessage, messagingController.postMessage);
 
-router.post('/:convId', auth(), messagingController.postMessage);
+// send a message to a specific conversation
+router.post('/:id/message', auth(), messageAuth, messagingController.postMessage);
 
-router.get('/:convId', auth(), messagingController.getMessages);
+//get All messages of a specific conversation
+router.get('/:id', auth(), messageAuth, messagingController.getMessages);
 
 
 

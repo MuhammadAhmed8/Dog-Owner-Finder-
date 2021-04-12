@@ -7,7 +7,10 @@ const conversationSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectID,
         ref: 'User'
     }],
-
+    topic: {
+        type: {},
+        required: true
+    }
 
 }, {
     timestamps: true

@@ -5,10 +5,11 @@ const { userService } = require("./");
 const ApiError = require('../utils/ApiError');
 
 
-exports.createConversation = async(member1, member2) => {
+exports.createConversation = async(member1, member2, topic) => {
 
     const conv = await Conversation.create({
-        participants: [member1, member2]
+        participants: [member1, member2],
+        topic
     })
 
     return conv;
@@ -36,31 +37,44 @@ exports.createMessage = async(convId, senderId, message) => {
     const messageObject = await Message.create({
         convId: convId,
         senderId: senderId,
-        content: message.payload,
-        askedAbout: message.askedAbout
+        content: message,
 
     });
 
     return messageObject;
 
-
-
 }
 
 
-exports.getMessages = async(convId) => {
 
-    const messages = Message.find({ convId: convId }).sort({ "_id": 1 });
+/**
+ * This method will return messages in a conversation
+ *
+ * @param {String} convId - id of conversation
+ * @return {Object} messages - all messages of a specific conversation
+ */
+exports.getMessages = async(convId, userId) => {
+
+    const messages = await Message.find({ convId: convId }).sort({ "_id": 1 });
 
     return messages;
-
-
 
 }
 
 exports.getAllConversations = async(userId) => {
 
-    const conversations = await Conversation.find({ participants: userId });
+    const conversations = await Conversation.find({ participants: userId }).sort({ "_id": -1 });
 
     return conversations;
+}
+
+
+exports.isParticipant = async(userId, convId) => {
+
+    const conv = await Conversation.findOne({ _id: convId, participants: userId });
+
+    if (conv) return true;
+
+    return false;
+
 }

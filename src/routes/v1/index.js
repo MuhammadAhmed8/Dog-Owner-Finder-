@@ -28,7 +28,7 @@ const defaultRoutes = [{
     },
 
     {
-        path: '/message',
+        path: '/conversations',
         route: messagingRoute
     }
 ];
