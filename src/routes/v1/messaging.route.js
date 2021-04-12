@@ -26,7 +26,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /conversations:
+ *   /conversations:
  *   post:
  *     summary: Create a conversation
  *     description: Only signed in users are allowed.
@@ -57,25 +57,74 @@ module.exports = router;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *
- *   /adopt/request:
+ */
+/**
+ * @swagger
+ *   /conversations/{id}:
  *   get:
- *     summary: Get all adoption requests
- *     description: Only staff members of that location are allowed.
- *     tags: [Adoption]
+ *     summary: Get all messages of a conversation
+ *     tags: [Conversation]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: skip
+ *       - in: query
+ *         name: limit
+ *         default: 10
  *     responses:
- *       "201":
- *         description: Created
+ *       "200":
+ *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Adoption'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Message'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ *
  */
+
+
+/**
+* @swagger
+    /conversations/{id}/message:
+*   post:
+*     summary: Post a message to the conversation
+*     tags: [Conversation]
+*     security:
+*       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             message: string
+*             required:
+*               - message
+*             properties:
+*               message:
+*                 type: string
+*     responses:
+*       "200":
+*         description: OK
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 results:
+*                   type: array
+*                   items:
+*                     $ref: '#/components/schemas/Message'
+*       "401":
+*         $ref: '#/components/responses/Unauthorized'
+*       "403":
+*         $ref: '#/components/responses/Forbidden'
+*/
