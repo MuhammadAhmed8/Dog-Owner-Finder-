@@ -66,7 +66,7 @@ const updatePet = catchError(async(req, res) => {
 
 
 const deletePet = catchError(async(req, res) => {
-    await petService.deletePet(req.params.userId);
+    await petService.deletePet(req.params.id);
     res.status(httpStatus.NO_CONTENT).send();
 });
 
