@@ -55,7 +55,7 @@ exports.createMessage = async(convId, senderId, message) => {
  */
 exports.getMessages = async(convId, userId) => {
 
-    const messages = await Message.find({ convId: convId }).sort({ "_id": 1 });
+    const messages = await Message.find({ convId: convId }).populate("senderId").sort({ "_id": 1 });
 
     return messages;
 

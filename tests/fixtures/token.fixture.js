@@ -13,5 +13,15 @@ const managePetAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M
 module.exports = {
     userOneAccessToken,
     adminAccessToken,
-    managePetAccessToken
+    managePetAccessToken,
+    succ
 };
+
+
+
+
+
+
+
+
+succ = 401
