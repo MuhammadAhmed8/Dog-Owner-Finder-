@@ -14,14 +14,5 @@ module.exports = {
     userOneAccessToken,
     adminAccessToken,
     managePetAccessToken,
-    succ
+
 };
-
-
-
-
-
-
-
-
-succ = 401

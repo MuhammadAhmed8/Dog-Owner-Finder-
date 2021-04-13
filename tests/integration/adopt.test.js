@@ -14,14 +14,14 @@ const { User, Token } = require('../../src/models');
 const { roleRights } = require('../../src/config/roles');
 const { tokenTypes } = require('../../src/config/tokens');
 const { userOne, admin, insertUsers } = require('../fixtures/user.fixture');
-const { userOneAccessToken, managePetAccessToken, succ } = require('../fixtures/token.fixture');
+const { userOneAccessToken, managePetAccessToken } = require('../fixtures/token.fixture');
 const { pet1, pet2, insertPets } = require('../fixtures/pet.fixture');
 
 setupTestDB();
 
 /*
   *********************************
-  Auth api tests with Jest and Supertest.
+  adopt api tests with Jest and Supertest.
   **********************************
 */
 
@@ -36,9 +36,27 @@ describe('Adopt routes', () => {
 
         test('Should return 201 status code if successful', async() => {
             await insertPets([pet1, pet2]);
-            const res = await request(app).post('/v1/adopt/request').set('Authorization', 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MDczMzJhMDhkNzA1ZDE4OTBhNjhkMzAiLCJpYXQiOjE2MTgyNjQwOTYsImV4cCI6MTYxODQ4MDA5NiwidHlwZSI6ImFjY2VzcyJ9.D4CTvAOaCynBcV-nMNoWBq8ze5wXN0v8Yoq1AgvgpMk').send(mockRequest);
+            const res = await request(app).post('/v1/adopt/request').set('Authorization', 'Bearer ' + managePetAccessToken).send(mockRequest);
 
-            expect(res.status).toBe(succ);
+            expect(res.status).toBe(201);
+
+
+        });
+
+
+
+    });
+
+})
+
+
+describe('Adopt routes', () => {
+    describe('GET /v1/adopt/request', () => {
+
+        test('Should return 201 status code if successful', async() => {
+            const res = await request(app).get('/v1/adopt/request').set('Authorization', 'Bearer ' + managePetAccessToken).send(mockRequest);
+
+            expect(res.status).toBe(201);
 
 
         });

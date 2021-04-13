@@ -1,13 +1,12 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
-const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
 const petController = require('../../controllers/pet.controller');
-
+const validate = require('../../middlewares/validate');
+const petValidation = require('../../validations/pet.validation');
 const router = express.Router();
 
 
-router.post('/', auth("managePets"), petController.createPet);
+router.post('/', auth("managePets"), validate(petValidation.createPet), petController.createPet);
 router.get('/', petController.getPets);
 router.get('/:id', petController.getPetById)
 router.patch('/:id', auth("managePets"), petController.updatePet)

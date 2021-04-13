@@ -71,17 +71,9 @@ describe('Pets routes', () => {
 
     describe('GET /v1/pets', () => {
         test('should return 200 and apply the default query options', async() => {
-            await insertPets([pet1, pet2]);
 
             const res = await request(app).get('/v1/pets').send();
             expect(res.status).toBe(httpStatus.OK);
-
-            expect(res.body).toEqual({
-                pets: expect.any(Array),
-                petCounts: 2, // total pet documents in the database
-            });
-
-            expect(res.body.pets.length).toBe(2);
 
         });
 
