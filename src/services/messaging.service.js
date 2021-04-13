@@ -63,7 +63,7 @@ exports.getMessages = async(convId, userId) => {
 
 exports.getAllConversations = async(userId) => {
 
-    const conversations = await Conversation.find({ participants: userId }).sort({ "_id": -1 });
+    const conversations = await Conversation.find({ participants: userId }).populate("participants").sort({ "_id": -1 });
 
     return conversations;
 }
